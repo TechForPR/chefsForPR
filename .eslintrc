@@ -1,0 +1,14 @@
+{
+    "extends": ["airbnb", "eslint:recommended", "plugin:jasmine/recommended"],
+    "plugins": ["jasmine"],
+    "rules": {
+        "no-console":0,
+        "func-names": [
+            "error",
+            "never"
+        ]
+    },
+  "env": {
+    "jasmine": true
+  }
+}
