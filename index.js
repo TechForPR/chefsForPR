@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
 
 const config = require('./config');
+const controllers = require('./controllers');
 
 config.mongoose.connection.on('open', () => {
   console.info('Connected to Mongo DB');
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/api', controllers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
