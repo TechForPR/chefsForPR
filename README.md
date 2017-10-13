@@ -2,6 +2,9 @@
 
 Platform to manage the distribution of meals created by World Central Kitchen.
 
+The project is developed in ExpressJs, using MongoDB as a backend, and
+handlebars for templates.
+
 ## Context
 
 [World Central Kitchen](https://www.worldcentralkitchen.org/) is changing the world through
@@ -20,15 +23,36 @@ Clone this repo and navigate to the root to install all
 the dependencies.
 
 ```
-git@github.com:TechForPR/chefsForPR.git
+git clone git@github.com:TechForPR/chefsForPR.git
 cd chefsForPR
 npm install
 ```
 
-To run the application, do:
+## Mongod DB
+
+On mac, use [homebrew](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/): `brew install mongodb`.
+
+In other platforms, find instructions on the mongo website:
+[Install mongodb](https://docs.mongodb.com/manual/installation/).
+
+To run the application, start mongo on a differnet terminal window, or as a daemon process, and then:
 
 ```
 npm start
+```
+
+If you'd like to start mongo as a daemon and store the log data
+in the project folder, run:
+
+```
+mongod --dbpath=data/db --fork --logpath=data/db/mongo.log
+```
+
+If successful, you should see the following message:
+
+```
+Listening on port 3000
+Connected to Mongo DB
 ```
 
 And navigate to [localhost:3000](http://localhost:3000)

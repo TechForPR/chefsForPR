@@ -7,5 +7,7 @@ describe('Code must pass Eslint validation', () => {
     'index.js',
     'test/**/*.js',
     'routes/**/*.js',
+    'config/**/*.js',
+    'models/**/*.js',
   ], {});
 });

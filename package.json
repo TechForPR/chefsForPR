@@ -2,6 +2,11 @@
   "name": "chefsforpr",
   "version": "0.0.0",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TechForPR/chefsForPR"
+  },
+  "license" : "MIT License",
   "scripts": {
     "start": "node ./bin/www",
     "test": "./node_modules/.bin/mocha --reporter spec"
@@ -13,6 +18,7 @@
     "express": "~4.15.5",
     "hbs": "~4.0.1",
     "less-middleware": "~2.2.1",
+    "mongoose": "^4.10.8",
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5"
   },

@@ -6,6 +6,12 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
 
+const config = require('./config');
+
+config.mongoose.connection.on('open', () => {
+  console.info('Connected to Mongo DB');
+});
+
 const index = require('./routes/index');
 const users = require('./routes/users');
 
