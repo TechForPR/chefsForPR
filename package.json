@@ -1,0 +1,19 @@
+{
+  "name": "chefsforpr",
+  "version": "1.0.0",
+  "description": "Platform to manage the distribution of meals created by World Kitchen Edit",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechForPR/chefsForPR.git"
+  },
+  "author": "techForPR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TechForPR/chefsForPR/issues"
+  },
+  "homepage": "https://github.com/TechForPR/chefsForPR#readme"
+}
