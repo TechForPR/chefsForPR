@@ -70,12 +70,16 @@ const Request = new Schema({
     status: {
         type: String,
         enum: requestStatuses,
+        default: requestStatuses[0],
     },
-    hidden: Boolean,
+    hidden: {
+        type: Boolean,
+        default: false,
+    }
 }, {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
     timestamps: true,
 });
 
-module.exports = Request;
+module.exports = mongoose.model('Request', Request);
