@@ -43,7 +43,10 @@ const Request = new Schema({
         type: String,
         required: [true, 'Tell us what city to deliver the food to'],
     },
-    zipcode: String,
+    zipcode: {
+        type: String,
+        required: [true, 'Tell us which Zipcode to deliver the food'],
+    },
     questions: {
         amountOfPeople: {
             type: Number,

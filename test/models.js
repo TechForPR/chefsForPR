@@ -7,6 +7,7 @@ const validRequest = {
     phone: 'xxx-xxx-xxxx',
     address: '123 fake st, apt 2',
     zipcode: '11001',
+    city: 'Arecibo',
     questions: {
         amountOfPeople: 10,
     },
