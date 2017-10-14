@@ -1,1 +1,2 @@
 require('./eslint');
+require('./models');
