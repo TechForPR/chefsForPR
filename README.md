@@ -41,13 +41,6 @@ To run the application, start mongo on a differnet terminal window, or as a daem
 npm start
 ```
 
-If you'd like to start mongo as a daemon and store the log data
-in the project folder, run:
-
-```
-mongod --dbpath=data/db --fork --logpath=data/db/mongo.log
-```
-
 If successful, you should see the following message:
 
 ```
