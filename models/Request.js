@@ -39,6 +39,10 @@ const Request = new Schema({
         type: String,
         required: [true, 'Address is required for delivery'],
     },
+    city: {
+        type: String,
+        required: [true, 'Tell us what city to deliver the food to'],
+    },
     zipcode: String,
     questions: {
         amountOfPeople: {
@@ -98,6 +102,7 @@ Request.statics.createForm = function (labels) {
         facebook: fields.string({ label: labels.facebook }),
         address: fields.string({ label: labels.address }),
         zipcode: fields.string({ label: labels.zipcode }),
+        city: fields.string({ label: labels.city }),
         'questions.amountOfPeople': fields.number({ required: true, label: labels.amountOfPeople }),
         'questions.amountOfDays': fields.number({ label: labels.amountOfDays }),
         'questions.receivingFoodAlready': fields.boolean({ label: labels.receivingFoodAlready, widget: widgets.select(), choices: { 'true': 'Si / Yes', 'false': 'No'}}),
