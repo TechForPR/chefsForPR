@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
@@ -18,16 +19,17 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#">New Request</a></li>
+            <li><a href="/request/new">New Request</a></li>
             {{!-- <li><a href="#">Login/Signup</a></li> --}}
             {{!-- <li><a href="#">Logout</a></li> --}}
           </ul>
         </div>
       </div>
     </nav>
-    <div class="container-fluid">
-      {{{body}}}
-    </div>
+    {{{body}}}
+    <footer>
+
+    </footer>
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
   </body>
