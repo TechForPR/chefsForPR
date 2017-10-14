@@ -62,6 +62,8 @@ $(document).ready(function () {
         }, function (response) {
             button.attr('disabled', false);
             alert.removeClass('hidden alert-info alert-success').addClass('alert-danger');
+            $('.has-error .text-danger').remove();
+            $('.has-error').removeClass('has-error');
             if (response.status === 400) {
                 alert.html('Por favor complete la informacíon que falta / Please complete the missing data');
                 // validation failed for the Request
