@@ -1,6 +1,8 @@
 const mongoose = require('../config').mongoose;
 const shortid = require('shortid');
+const forms = require('forms');
 const requestStatuses = require('../config/constants').requestStatuses;
+
 
 // Taken from this answer: https://stackoverflow.com/questions/22732836/mongoose-conditional-required-validation
 // Either phone number or email are required so the volunteers can verify the requests
@@ -81,5 +83,34 @@ const Request = new Schema({
     toJSON: { virtuals: true },
     timestamps: true,
 });
+
+Request.statics.createForm = function (labels) {
+    const fields = forms.fields;
+    // const validators = forms.validators;
+    const widgets = forms.widgets;
+
+    const reg_form = forms.create({
+        name: fields.string({ required: true, label: labels.name }),
+        agency: fields.string({ label: labels.agency }),
+        email: fields.email({ label: labels.email }),
+        phone: fields.tel({ label: labels.phone }),
+        twitter: fields.string({ label: labels.twitter }),
+        facebook: fields.string({ label: labels.facebook }),
+        address: fields.string({ label: labels.address }),
+        zipcode: fields.string({ label: labels.zipcode }),
+        'questions.amountOfPeople': fields.number({ required: true, label: labels.amountOfPeople }),
+        'questions.amountOfDays': fields.number({ label: labels.amountOfDays }),
+        'questions.receivingFoodAlready': fields.boolean({ label: labels.receivingFoodAlready, widget: widgets.select(), choices: { 'true': 'Si / Yes', 'false': 'No'}}),
+        'questions.receivingFoodAlreadyDetails': fields.string({ label: labels.receivingFoodAlreadyDetails, widget: widgets.textarea() }),
+        'questions.currentlyHaveFoodFor': fields.number({ label: labels.currentlyHaveFoodFor }),
+        'questions.currentlyHaveFoodForDetails': fields.string({ label: labels.currentlyHaveFoodForDetails, widget: widgets.textarea()  }),
+        'needs.breakfast': fields.number({ required: true, label: labels.breakfast }),
+        'needs.lunch': fields.number({ required: true, label: labels.lunch }),
+        'needs.dinner': fields.number({ required: true, label: labels.dinner }),
+        'needs.dietaryRestrictions': fields.string({ label: labels.dietaryRestrictions }),
+        'needs.needBy': fields.date({ label: labels.needBy, widget: widgets.date(), }),
+    });
+    return reg_form;
+}
 
 module.exports = mongoose.model('Request', Request);
