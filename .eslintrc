@@ -1,14 +1,24 @@
 {
-    "extends": ["airbnb", "eslint:recommended", "plugin:jasmine/recommended"],
-    "plugins": ["jasmine"],
+    "extends": [
+        "airbnb",
+        "eslint:recommended",
+        "plugin:jasmine/recommended"
+    ],
+    "plugins": [
+        "jasmine"
+    ],
     "rules": {
-        "no-console":0,
+        "no-console": 0,
         "func-names": [
             "error",
             "never"
         ]
     },
-  "env": {
-    "jasmine": true
-  }
+    "env": {
+        "jasmine": true,
+        "browser": true
+    },
+    "globals": {
+        "$": true
+    }
 }
