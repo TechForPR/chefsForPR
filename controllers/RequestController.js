@@ -2,7 +2,7 @@ const Request = require('../models/Request');
 
 function create(req, res) {
     if (!req.body || !req.body.data) {
-        return res.status(401).send({error: 401, message: 'Missing data'});
+        return res.status(422).send({error: 422, message: 'Missing data'});
     }
     const request = new Request(req.body.data);
     request.save().then(doc => {
