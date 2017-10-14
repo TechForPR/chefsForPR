@@ -8,13 +8,11 @@ const lessMiddleware = require('less-middleware');
 
 const config = require('./config');
 const controllers = require('./controllers');
+const index = require('./routes/index');
 
 config.mongoose.connection.on('open', () => {
   console.info('Connected to Mongo DB');
 });
-
-const index = require('./routes/index');
-const users = require('./routes/users');
 
 const app = express();
 
@@ -31,9 +29,12 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+// All the urls that start with api refer to endpoints
+// their responses are usually json and not actual views
 app.use('/api', controllers);
+// the index views manages all the front end views, like
+// forms, dashboards, etcs
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
