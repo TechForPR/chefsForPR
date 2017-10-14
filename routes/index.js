@@ -12,13 +12,14 @@ router.get('/', function(req, res) {
 router.get('/request/new', function (req, res) {
   const form = Request.createForm({
     name: '*Su Nombre:',
-    agency: '*Nombre la agencia:',
+    agency: 'Nombre la agencia:',
     email: 'Su Email, lo podriamos usar para confirmar la solicitud y coordinar la entrega',
     phone: 'Su Telefono, lo podriamos usar para confirmar la solicitud y coordinar la entrega',
     twitter: 'Link a su perfil Twitter',
     facebook: 'Link a su perfil de Facebook',
     address: '*Dirección donde realizar la entrega',
-    zipcode: 'Zipcode',
+    city: '*Ciudad',
+    zipcode: '*Zipcode',
     'amountOfPeople': '*Cantidad de personas',
     'amountOfDays': 'Para cuantos días desea hacer la solicitud',
     'receivingFoodAlready': 'Está recibiendo comida actualmente?',
