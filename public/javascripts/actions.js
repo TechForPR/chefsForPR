@@ -58,6 +58,7 @@ $(document).ready(function () {
             alert.removeClass('hidden alert-danger alert-info').addClass('alert-success').html('<strong>Se ha guardado su solicitud, pronto le responderemos / Your request was recorded, we will respond soon</strong>');
             alert.after('<h2><small>Su codigo de confirmación es / Your confirmation code is: </small><br>' + response.doc.shortId + '</h2>');
             form.find('.form-group, .btn').addClass('hidden');
+            window.location.replace('/request/' + response.doc.shortId);
             //TODO: redirect to details page when available
         }, function (response) {
             button.attr('disabled', false);
