@@ -2,7 +2,8 @@ const mongoose = require('../config').mongoose;
 const shortid = require('shortid');
 const forms = require('forms');
 const requestStatuses = require('../config/constants').requestStatuses;
-
+const longDateFormat = require('../config/constants').longDateFormat;
+const moment = require('moment');
 
 // Taken from this answer: https://stackoverflow.com/questions/22732836/mongoose-conditional-required-validation
 // Either phone number or email are required so the volunteers can verify the requests
@@ -120,5 +121,9 @@ Request.statics.createForm = function (labels) {
     });
     return reg_form;
 }
+
+Request.virtual('requestedOn').get(function () {
+    return moment(this.createdAt).format(longDateFormat);
+});
 
 module.exports = mongoose.model('Request', Request);

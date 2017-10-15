@@ -40,4 +40,14 @@ router.get('/request/new', function (req, res) {
   });
 });
 
+router.get('/request/:shortId', function (req, res) {
+  Request.findOne({ shortId: req.params.shortId }).then(doc => {
+    if (!doc) return res.status(404).render('404');
+    console.log( doc.toJSON({ virtuals: true }));
+    res.render('request/details', { doc: doc.toJSON({ virtuals: true }), title: `Detalles de la solicitud ${req.params.shortId}`});
+  }).catch(err => {
+    res.status(400).send(err);
+  });
+});
+
 module.exports = router;

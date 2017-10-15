@@ -7,6 +7,9 @@ const requestStatuses = [
     'pending',
 ];
 
+const longDateFormat = 'MMMM DD YYYY hh:mm A';
+
 module.exports = {
     requestStatuses,
+    longDateFormat,
 }
