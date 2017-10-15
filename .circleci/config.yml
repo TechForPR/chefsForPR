@@ -4,15 +4,6 @@
 #
 version: 2
 
-dependencies:
-  cache_directories:
-    - mongodb-linux-x86_64-ubuntu1204-3.2.0
-  pre:
-    - if [[ ! -d mongodb-linux-x86_64-ubuntu1204-3.2.0 ]]; then wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1204-3.2.0.tgz && tar xvzf mongodb-linux-x86_64-ubuntu1204-3.2.0.tgz; fi
-    - sudo stop mongodb
-    - sudo cp mongodb-linux-x86_64-ubuntu1204-3.2.0/bin/* /usr/bin
-    - sudo start mongodb
-
 machine:
   services:
     - mongodb
@@ -26,7 +17,7 @@ jobs:
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
