@@ -28,12 +28,27 @@ function getByShortId(req, res) {
 }
 
 function getByQueryParams(req, res){
-    // add request query params
     var query = {};
+    var sortBy = {};
+    var limit = 25;
+    // add request query params
     for(param in req.query){
-        query[param] = req.query[param];
+        if(["limit","sortBy"].indexOf(param) < 0){
+            query[param] = req.query[param];
+        }
     }
-    Request.find(query).then((docs) => {
+    // limit to 25 by docs by default, "limit" query param overwrites this value
+    var re = /^[0-9]*$/i;
+    if(req.query.hasOwnProperty('limit') && req.query.limit.match(re)){
+        limit = parseInt(req.query.limit);
+    }
+    // sortBy by one field
+    var re = /^[-|+]+[a-zA-Z0-9]*$/i;
+    if(req.query.hasOwnProperty('sortBy') && req.query.limit.match(re)){
+        sortBy = req.query[param];
+    }
+    // query the schema
+    Request.find(query).limit(limit).sort(sortBy).then((docs) => {
         if(docs.length > 0){
             res.status(200).send( docs );
         }else{
