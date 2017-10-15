@@ -17,6 +17,10 @@ const conditionalRequire = {
 const Schema = mongoose.Schema;
 
 const Request = new Schema({
+    language: {
+        type: String,
+        enum: ['english', 'spanish'],
+    },
     shortId: {
         type: String,
         'default': shortid.generate,
@@ -76,12 +80,13 @@ const Request = new Schema({
     timestamps: true,
 });
 
-Request.statics.createForm = function (labels) {
+Request.statics.createForm = function (labels, language) {
     const fields = forms.fields;
     // const validators = forms.validators;
     const widgets = forms.widgets;
 
     const reg_form = forms.create({
+        language: fields.string({required: true, widget: widgets.hidden(), value: language}),
         name: fields.string({ required: true, label: labels.name }),
         agency: fields.string({ label: labels.agency }),
         email: fields.email({ label: labels.email }),
