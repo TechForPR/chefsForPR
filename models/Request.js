@@ -34,8 +34,6 @@ const Request = new Schema({
         type: String,
         validate: conditionalRequire,
     },
-    twitter: String,
-    facebook: String,
     address: {
         type: String,
         required: [true, 'Address is required for delivery'],
@@ -58,22 +56,8 @@ const Request = new Schema({
         },
         receivingFoodAlready: Boolean,
         receivingFoodAlreadyDetails: String,
-        currentlyHaveFoodFor: Number,
-        currentlyHaveFoodForDetails: String,
     },
     needs: {
-        breakfast: {
-            type: Number,
-            required: [true, 'Tell us how many breakfasts you need'],
-        },
-        lunch: {
-            type: Number,
-            required: [true, 'Tell us how many lunches you need'],
-        },
-        dinner: {
-            type: Number,
-            required: [true, 'Tell us how many dinners you need'],
-        },
         dietaryRestrictions: String,
         needBy: Date,
     },
@@ -102,8 +86,6 @@ Request.statics.createForm = function (labels) {
         agency: fields.string({ label: labels.agency }),
         email: fields.email({ label: labels.email }),
         phone: fields.tel({ label: labels.phone }),
-        twitter: fields.string({ label: labels.twitter }),
-        facebook: fields.string({ label: labels.facebook }),
         address: fields.string({ label: labels.address }),
         zipcode: fields.string({ label: labels.zipcode }),
         city: fields.string({ label: labels.city }),
@@ -111,11 +93,6 @@ Request.statics.createForm = function (labels) {
         'questions.amountOfDays': fields.number({ label: labels.amountOfDays }),
         'questions.receivingFoodAlready': fields.boolean({ label: labels.receivingFoodAlready, widget: widgets.select(), choices: { 'true': 'Si / Yes', 'false': 'No'}}),
         'questions.receivingFoodAlreadyDetails': fields.string({ label: labels.receivingFoodAlreadyDetails, widget: widgets.textarea() }),
-        'questions.currentlyHaveFoodFor': fields.number({ label: labels.currentlyHaveFoodFor }),
-        'questions.currentlyHaveFoodForDetails': fields.string({ label: labels.currentlyHaveFoodForDetails, widget: widgets.textarea()  }),
-        'needs.breakfast': fields.number({ required: true, label: labels.breakfast }),
-        'needs.lunch': fields.number({ required: true, label: labels.lunch }),
-        'needs.dinner': fields.number({ required: true, label: labels.dinner }),
         'needs.dietaryRestrictions': fields.string({ label: labels.dietaryRestrictions }),
         'needs.needBy': fields.date({ label: labels.needBy, widget: widgets.date(), }),
     });
