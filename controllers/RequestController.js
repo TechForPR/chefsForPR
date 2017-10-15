@@ -27,7 +27,28 @@ function getByShortId(req, res) {
     });
 }
 
+function getByQueryParams(req, res){
+    // add request query params
+    var query = {};
+    for(param in req.query){
+        query[param] = req.query[param];
+    }
+    Request.find(query).then((docs) => {
+        if(docs.length > 0){
+            res.status(200).send( docs );
+        }else{
+            res.status(404).send({ error: 404, message: 'No documents matching criteria'});
+        }
+    }).catch((err) => {
+        res.status(500).send(Object.assign(
+            { error: 500, message: 'Server error'},
+            err,
+        ));
+    });
+}
+
 module.exports = {
     create,
     getByShortId,
+    getByQueryParams
 }
