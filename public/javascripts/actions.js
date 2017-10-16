@@ -170,6 +170,11 @@ $(document).ready(function () {
         filter = filter + (date ? 'createdAt=' + date : '');
         return filter;
     }
+    if (window.location.pathname === '/') {
+        $('#trackRequest').on('click', function () {
+            window.location.replace('/request/' + $('#requestId').val());
+        });
+    }
     if (window.location.pathname === '/requests') {
         getRequests().then(function (docs) {
             $('#request-list').html(createRequestsTable(docs));
