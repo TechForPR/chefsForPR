@@ -38,6 +38,12 @@ var formObject = function ($o) {
     return o;
 }
 
+if (!Array.isArray) {
+    Array.isArray = function(arg) {
+      return Object.prototype.toString.call(arg) === '[object Array]';
+    };
+  }
+
 
 // Submit form in /request/new
 $(document).ready(function () {
@@ -90,5 +96,43 @@ $(document).ready(function () {
                 alert.html(language == 'spanish' ? 'Hubo un error al solicitar, por favor intente mas tarde.' : 'There was an error saving, please try again later.');
             }
         });
+    });
+});
+
+
+// Get list of requests in /requests
+var getRequests = function (filter) {
+    return $.ajax({
+        type: 'GET',
+        url: '/api/requests',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: (filter || ''),
+    }).then(function (response) {
+        return response;
+    });
+};
+
+var createRequestsTable = function (docs) {
+    if (!Array.isArray(docs)) return '';
+    var result = '<table class="table table-striped">';
+    result += '<tbody>';
+    result += '<thead><tr><th>Name</th><th>City</th><th># of People</th><th>Details</th></tr></thead>'
+    for (var i = 0; i < docs.length; i++) {
+        result += '<tr>';
+        result += '  <td>' + (docs[i].name || '') + '</td>';
+        result += '  <td>' + (docs[i].city || '') + '</td>';
+        result += '  <td>' + (docs[i].questions.amountOfPeople || '') + '</td>';
+        result += '  <td><a href="/request/' + docs[i].shortId + '">' + (docs[i].shortId || '') + '</a></td>';
+        result += '</tr>';
+    }
+    result += '</tbody>';
+    result += '</table>';
+    return result;
+};
+
+$(document).ready(function () {
+    getRequests().then(function (docs) {
+        $('#request-list').html(createRequestsTable(docs));
     });
 });
