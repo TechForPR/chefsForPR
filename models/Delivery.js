@@ -40,6 +40,9 @@ const Delivery = new Schema({
     demandSuplyGap: {
         type: String,
     },
+    requestNumber: {
+        type: String,
+    },
     status: {
         type: String,
         enum: deliveryStatuses,
@@ -64,6 +67,7 @@ Delivery.statics.createForm = function (labels) {
         districtName: fields.string({ label: labels.districtName }),
         lastDayOfDelivery: fields.date({ label: labels.lastDayOfDelivery, widget: widgets.date() }),
         numberOfMealsDelivered: fields.number({ label: labels.numberOfMealsDelivered }),
+        requestNumber: fields.string({ label: labels.requestNumber }),
     });
     return reg_form;
 }

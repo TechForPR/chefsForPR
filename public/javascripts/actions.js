@@ -148,10 +148,11 @@ var createDeliveriesTable = function (docs) {
     if (!Array.isArray(docs)) return '';
     var result = '<table class="table table-striped">';
     result += '<tbody>';
-    result += '<thead><tr><th>District Name</th><th>Last Day of Delivery</th><th># of Meals Delivered</th><th>Details</th></tr></thead>'
+    result += '<thead><tr><th>District Name</th><th>Agency</th><th>Last Day of Delivery</th><th># of Meals Delivered</th><th>Details</th></tr></thead>'
     for (var i = 0; i < docs.length; i++) {
         result += '<tr>';
         result += '  <td>' + (docs[i].districtName || '') + '</td>';
+        result += '  <td>' + (docs[i].agency || '') + '</td>';
         result += '  <td>' + (docs[i].lastDayOfDeliveryParsed || '') + '</td>';
         result += '  <td>' + (docs[i].numberOfMealsDelivered || '') + '</td>';
         result += '  <td><a href="/delivery/' + docs[i].shortId + '">' + (docs[i].shortId || '') + '</a></td>';

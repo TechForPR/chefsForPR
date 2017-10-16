@@ -95,7 +95,7 @@ Request.statics.createForm = function (labels, language) {
         zipcode: fields.string({ label: labels.zipcode }),
         city: fields.string({ label: labels.city }),
         'questions.amountOfPeople': fields.number({ required: true, label: labels.amountOfPeople }),
-        'questions.amountOfDays': fields.number({ label: labels.amountOfDays }),
+        // 'questions.amountOfDays': fields.number({ label: labels.amountOfDays }),
         'questions.receivingFoodAlready': fields.boolean({ label: labels.receivingFoodAlready, widget: widgets.select(), choices: { 'true': 'Si / Yes', 'false': 'No'}}),
         'questions.receivingFoodAlreadyDetails': fields.string({ label: labels.receivingFoodAlreadyDetails, widget: widgets.textarea() }),
         'needs.dietaryRestrictions': fields.string({ label: labels.dietaryRestrictions }),

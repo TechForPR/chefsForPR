@@ -28,6 +28,7 @@ router.get('/delivery/new', function (req, res) {
     lastDayOfDelivery: '*Last day of delivery?',
     numberOfMealsDelivered: '*Number of Meals delivered',
     demandSuplyGap: 'Demand and supply gap?',
+    requestNumber: 'Request Id (if fullfilling a request)',
   });
   res.render('delivery/new', {
     title: 'Register Delivery', form: form.toHTML(boostrapFields),
