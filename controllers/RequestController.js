@@ -30,7 +30,8 @@ function getByShortId(req, res) {
 function getByQueryParams(req, res){
     var query = {};
     var sortBy = {};
-    var limit = 25;
+    var limit = 200;
+    let param = '';
     // add request query params
     for(param in req.query){
         if(["limit","sortBy"].indexOf(param) < 0){
@@ -43,14 +44,15 @@ function getByQueryParams(req, res){
         limit = parseInt(req.query.limit);
     }
     // sortBy by one field
-    var re = /^[-|+]+[a-zA-Z0-9]*$/i;
-    if(req.query.hasOwnProperty('sortBy') && req.query.limit.match(re)){
+    var re2 = /^[-|+]+[a-zA-Z0-9]*$/i;
+    if(req.query.hasOwnProperty('sortBy') && req.query.limit.match(re2)){
         sortBy = req.query[param];
     }
+    console.log(query);
     // query the schema
     Request.find(query).limit(limit).sort(sortBy).then((docs) => {
         if(docs.length > 0){
-            res.status(200).send( docs );
+            res.status(200).send(docs);
         }else{
             res.status(404).send({ error: 404, message: 'No documents matching criteria'});
         }

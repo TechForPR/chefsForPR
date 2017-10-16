@@ -9,6 +9,10 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Chefs For Puerto Rico 🇵🇷' });
 });
 
+router.get('/requests', function (req, res) {
+  res.render('request/list', { title: 'Request dashboard'});
+});
+
 router.get('/request/new/:language', function (req, res) {
   if(req.params.language == 'spanish') {
     const form = Request.createForm({
