@@ -100,7 +100,7 @@ $(document).ready(function () {
             dataType: 'json',
             data: JSON.stringify({ data: formObject($(this)) }),
         }).then(function (response) {
-            alert.removeClass('hidden alert-danger alert-info').addClass('alert-success').html('<strong>Login successful</strong>');
+            alert.removeClass('hidden alert-danger alert-info').addClass('alert-success').html('<strong>Account successfully created</strong>');
             form.find('.form-group, .btn').addClass('hidden');
             // window.location.replace('/users/profile');
             //TODO: redirect to profile page when available
@@ -124,6 +124,36 @@ $(document).ready(function () {
                         }
                     }
                 }
+            } else {
+                alert.html('Hubo un error al solicitar, por favor intente mas tarde / There was an error saving, please try again later.');
+            }
+        });
+    });
+    $('#login form').on('submit', function (e) {
+        e.preventDefault();
+        var form = $(this);
+        var button = $(this).find('button');
+        var alert =  $(this).find('.alert');
+        button.attr('disabled', true);
+        alert.removeClass('hidden alert-success alert-danger').addClass('alert-info').html('Enviando / Sending...');
+        $.ajax({
+            type: 'POST',
+            url: '/api/user/login',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify( formObject($(this)) ),
+        }).then(function (response) {
+            alert.removeClass('hidden alert-danger alert-info').addClass('alert-success').html('<strong>Login successful</strong>');
+            form.find('.form-group, .btn').addClass('hidden');
+            // window.location.replace('/users/profile');
+            //TODO: redirect to profile page when available
+        }, function (response) {
+            button.attr('disabled', false);
+            alert.removeClass('hidden alert-info alert-success').addClass('alert-danger');
+            $('.has-error .text-danger').remove();
+            $('.has-error').removeClass('has-error');
+            if (response.status === 401) {
+                alert.html(response.responseJSON.message);
             } else {
                 alert.html('Hubo un error al solicitar, por favor intente mas tarde / There was an error saving, please try again later.');
             }

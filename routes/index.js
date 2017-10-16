@@ -1,7 +1,7 @@
 const express = require('express');
 const Request = require('../models/Request');
 const boostrapFields = require('../helpers/formsHelpers').bootstrapFields;
-const passport = require('passport');
+
 const router = express.Router();
 //For User
 const User = require('../models/User');
@@ -72,7 +72,7 @@ router.get('/login', function(req, res) {
     form: login_form.toHTML(boostrapFields),
     message: '',
     submitText: 'Login',
-    form_action:'/login',
+    form_type:'login',
   });
 });
 
@@ -83,16 +83,14 @@ router.get('/signup',function(req,res){
     form: signup_form.toHTML(boostrapFields),
     message: '',
     submitText: 'Sign Up',
-    form_action:'/signup',
+    form_type:'signup',
   });
 });
-router.post('/api/user/signup', passport.authenticate('local-signup', {
-  successRedirect: '/profile', // redirect to the secure profile section
-  failureRedirect: '/signup', // redirect back to the signup page if there is an error
-  failureFlash: true // allow flash messages
-}));
-router.get('/test-auth', isLoggedIn, function(req, res) {
 
+router.get('/test-auth', isLoggedIn, function(req, res) {
+  res.render('user/auth-test', {
+    user:req.user
+  });
 });
 
 function isLoggedIn(req, res, next) {

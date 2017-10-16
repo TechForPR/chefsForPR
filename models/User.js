@@ -1,17 +1,8 @@
 const mongoose = require('../config').mongoose;
-const passport = require('passport');
-const flash = require('connect-flash');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const session = require('express-session');
 const forms = require('forms');
-const bcrypt   = require('bcrypt-nodejs');
+const bcrypt  = require('bcrypt-nodejs');
 
-// app.use(session({ secret: 'somethingsecret' }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(flash());
+
 const conditionalRequire = {
   validator: function() {
     return (this.email && this.email !== null) || (this.phone && this.phone !== null);
@@ -35,7 +26,7 @@ User.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 User.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
 User.statics.createLoginForm = function() {
   const fields = forms.fields;
