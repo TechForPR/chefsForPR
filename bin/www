@@ -7,7 +7,8 @@
 var app = require('../index');
 var debug = require('debug')('chefsforpr:server');
 var http = require('http');
-
+var passport = require('passport');
+require('../config/passport')(passport);
 /**
  * Get port from environment and store in Express.
  */

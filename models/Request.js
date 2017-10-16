@@ -121,7 +121,6 @@ Request.statics.createForm = function (labels) {
     });
     return reg_form;
 }
-
 Request.virtual('requestedOn').get(function () {
     return moment(this.createdAt).format(longDateFormat);
 });

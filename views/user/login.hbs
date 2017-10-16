@@ -1,0 +1,12 @@
+<div id="signup" class="container-fluid">
+    <div class="jumbotron">
+        <h1>{{title}}</h1>
+        <p>{{{message}}}</p>
+    </div>
+    <form class="form" method="post" action="{{form_action}}">
+        {{!-- <div class="alert hidden" role="alert"></div> --}}
+        {{{ form }}}
+        <div class="alert hidden" role="alert"></div>
+        <button class="btn btn-primary" type="submit" >{{submitText}}</button>
+    </form>
+</div>
