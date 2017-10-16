@@ -16,6 +16,10 @@ router.get('/requests', function (req, res) {
   res.render('request/list', { title: 'Request dashboard'});
 });
 
+router.get('/deliveries', function (req, res) {
+  res.render('delivery/list', { title: 'Deliveries dashboard'});
+});
+
 router.get('/delivery/new', function (req, res) {
   const form = Delivery.createForm({
     districtName: 'District Name',

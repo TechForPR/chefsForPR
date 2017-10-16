@@ -53,7 +53,6 @@ Delivery.statics.createForm = function (labels) {
         districtName: fields.string({ label: labels.districtName }),
         lastDayOfDelivery: fields.date({ label: labels.lastDayOfDelivery, widget: widgets.date() }),
         numberOfMealsDelivered: fields.number({ label: labels.numberOfMealsDelivered }),
-        demandSuplyGap: fields.string({ label: labels.demandSuplyGap }),
     });
     return reg_form;
 }

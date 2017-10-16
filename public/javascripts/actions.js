@@ -106,11 +106,10 @@ $(document).ready(function () {
     });
 });
 
-// Get list of requests in /requests
-var getRequests = function (filter) {
+var getResource = function (resource, filter) {
     return $.ajax({
         type: 'GET',
-        url: '/api/requests',
+        url: '/api/' + resource,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         data: (filter || ''),
@@ -118,6 +117,14 @@ var getRequests = function (filter) {
         return response;
     });
 };
+
+var getRequests = function (filter) {
+    return getResource('requests', filter);
+};
+
+var getDeliveries = function(filter) {
+    return getResource('deliveries', filter);
+}
 
 var createRequestsTable = function (docs) {
     if (!Array.isArray(docs)) return '';
@@ -137,6 +144,23 @@ var createRequestsTable = function (docs) {
     return result;
 };
 
+var createDeliveriesTable = function (docs) {
+    if (!Array.isArray(docs)) return '';
+    var result = '<table class="table table-striped">';
+    result += '<tbody>';
+    result += '<thead><tr><th>District Name</th><th>Last Day of Delivery</th><th># of Meals Delivered</th><th>Details</th></tr></thead>'
+    for (var i = 0; i < docs.length; i++) {
+        result += '<tr>';
+        result += '  <td>' + (docs[i].districtName || '') + '</td>';
+        result += '  <td>' + (docs[i].lastDayOfDeliveryParsed || '') + '</td>';
+        result += '  <td>' + (docs[i].numberOfMealsDelivered || '') + '</td>';
+        result += '  <td><a href="/delivery/' + docs[i].shortId + '">' + (docs[i].shortId || '') + '</a></td>';
+        result += '</tr>';
+    }
+    result += '</tbody>';
+    result += '</table>';
+    return result;
+};
 
 $(document).ready(function () {
     var getFilter = function () {
@@ -146,16 +170,30 @@ $(document).ready(function () {
         filter = filter + (date ? 'createdAt=' + date : '');
         return filter;
     }
-
-    getRequests().then(function (docs) {
-        $('#request-list').html(createRequestsTable(docs));
-    });
-    $('#changeStatus, #changeDate').on('change', function () {
-        var filter = getFilter();
-        getRequests(filter).then(function (docs) {
+    if (window.location.pathname === '/requests') {
+        getRequests().then(function (docs) {
             $('#request-list').html(createRequestsTable(docs));
-        }, function () {
-            $('#request-list').html('<h2>No Requests found matching the criteria.</h2>');
         });
-    });
+        $('#changeStatus, #changeDate').on('change', function () {
+            var filter = getFilter();
+            getRequests(filter).then(function (docs) {
+                $('#request-list').html(createRequestsTable(docs));
+            }, function () {
+                $('#request-list').html('<h2>No Requests found matching the criteria.</h2>');
+            });
+        });
+    }
+    if (window.location.pathname === '/deliveries') {
+        getDeliveries().then(function (docs) {
+            $('#deliveries-list').html(createDeliveriesTable(docs));
+        });
+        $('#changeStatus, #changeDate').on('change', function () {
+            var filter = getFilter();
+            getDeliveries(filter).then(function (docs) {
+                $('#deliveries-list').html(createDeliveriesTable(docs));
+            }, function () {
+                $('#deliveries-list').html('<h2>No Requests found matching the criteria.</h2>');
+            });
+        });
+    }
 });
