@@ -56,7 +56,7 @@ router.get('/request/new/:language', function (req, res) {
   }
 });
 
-router.get('/request/:shortId', function (req, res) {
+router.get('/request/:shortId*?', function (req, res) {
   Request.findOne({ shortId: req.params.shortId }).then(doc => {
     if (!doc) return res.status(404).render('404');
     console.log( doc.toJSON({ virtuals: true }));
@@ -66,7 +66,7 @@ router.get('/request/:shortId', function (req, res) {
   });
 });
 
-router.get('/delivery/:shortId', function (req, res) {
+router.get('/delivery/:shortId*?', function (req, res) {
   Delivery.findOne({ shortId: req.params.shortId }).then(doc => {
     if (!doc) return res.status(404).render('404');
     console.log( doc.toJSON({ virtuals: true }));
