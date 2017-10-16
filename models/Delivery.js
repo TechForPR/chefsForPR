@@ -62,4 +62,8 @@ Delivery.virtual('createdOn').get(function () {
     return moment(this.createdAt).format(longDateFormat);
 });
 
+Delivery.virtual('lastDayOfDeliveryParsed').get(function () {
+    return moment(this.lastDayOfDelivery).format(longDateFormat);
+});
+
 module.exports = mongoose.model('Delivery', Delivery);
