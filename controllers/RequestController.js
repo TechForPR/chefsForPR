@@ -1,4 +1,5 @@
 const Request = require('../models/Request');
+const moment = require('moment');
 
 function create(req, res) {
     if (!req.body || !req.body.data) {
@@ -34,7 +35,7 @@ function getByQueryParams(req, res){
     let param = '';
     // add request query params
     for(param in req.query){
-        if(["limit","sortBy"].indexOf(param) < 0){
+        if(['limit', 'sortBy', 'createdAt'].indexOf(param) < 0){
             query[param] = req.query[param];
         }
     }
@@ -48,7 +49,12 @@ function getByQueryParams(req, res){
     if(req.query.hasOwnProperty('sortBy') && req.query.limit.match(re2)){
         sortBy = req.query[param];
     }
-    console.log(query);
+    if (req.query.hasOwnProperty('createdAt')) {
+        query.createdAt =  {
+            '$gte': moment(req.query.createdAt).startOf('day'),
+            '$lt': moment(req.query.createdAt).endOf('day'),
+        };
+    }
     // query the schema
     Request.find(query).limit(limit).sort(sortBy).then((docs) => {
         if(docs.length > 0){

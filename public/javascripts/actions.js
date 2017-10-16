@@ -131,8 +131,25 @@ var createRequestsTable = function (docs) {
     return result;
 };
 
+
 $(document).ready(function () {
+    var getFilter = function () {
+        var status = $('#changeStatus').val();
+        var date = $('#changeDate').val();
+        var filter = '' + (status ? 'status=' + status : '');
+        filter = filter + (date ? 'createdAt=' + date : '');
+        return filter;
+    }
+
     getRequests().then(function (docs) {
         $('#request-list').html(createRequestsTable(docs));
+    });
+    $('#changeStatus, #changeDate').on('change', function () {
+        var filter = getFilter();
+        getRequests(filter).then(function (docs) {
+            $('#request-list').html(createRequestsTable(docs));
+        }, function () {
+            $('#request-list').html('<h2>No Requests found matching the criteria.</h2>');
+        });
     });
 });
