@@ -22,9 +22,11 @@ router.get('/deliveries', function (req, res) {
 
 router.get('/delivery/new', function (req, res) {
   const form = Delivery.createForm({
-    districtName: 'District Name',
-    lastDayOfDelivery: 'Last day of delivery?',
-    numberOfMealsDelivered: 'Number of Meals delivered',
+    agency: '*Name of organization',
+    districtName: '*District Name / Neighborhood',
+    municipality: '*Municipality / City',
+    lastDayOfDelivery: '*Last day of delivery?',
+    numberOfMealsDelivered: '*Number of Meals delivered',
     demandSuplyGap: 'Demand and supply gap?',
   });
   res.render('delivery/new', {

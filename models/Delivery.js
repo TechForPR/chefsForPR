@@ -16,7 +16,15 @@ const Delivery = new Schema({
         type: String,
         'default': shortid.generate,
     },
+    agency: {
+        type: String,
+        required: [true, 'This field is required'],
+    },
     districtName: {
+        type: String,
+        required: [true, 'This field is required'],
+    },
+    municipality: {
         type: String,
         required: [true, 'This field is required'],
     },
@@ -27,6 +35,7 @@ const Delivery = new Schema({
     },
     numberOfMealsDelivered: {
         type: Number,
+        required: [true, 'Last Day Of Delivery is required'],
     },
     demandSuplyGap: {
         type: String,
@@ -50,6 +59,8 @@ Delivery.statics.createForm = function (labels) {
     const fields = forms.fields;
     const widgets = forms.widgets;
     const reg_form = forms.create({
+        agency: fields.number({ label: labels.agency }),
+        municipality: fields.string({ label: labels.municipality }),
         districtName: fields.string({ label: labels.districtName }),
         lastDayOfDelivery: fields.date({ label: labels.lastDayOfDelivery, widget: widgets.date() }),
         numberOfMealsDelivered: fields.number({ label: labels.numberOfMealsDelivered }),

@@ -25,6 +25,8 @@ const validDelivery = {
     lastDayOfDelivery: new Date('2017-10-25'),
     numberOfMealsDelivered: 100,
     demandSuplyGap: '100 missing',
+    municipality: 'Arecibo',
+    agency: 'Red Cross',
 };
 
 describe('Food Request Model', function () {
