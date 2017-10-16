@@ -1,18 +1,20 @@
 const routes = require('express').Router();
-const RequestControlller = require('./RequestController');
-const DeliveryControlller = require('./DeliveryController');
+const RequestController = require('./RequestController');
+const DeliveryController = require('./DeliveryController');
 
 routes.get('/', function (req, res) {
     res.status(200).send({message: 'Welcome to the API!'});
 });
 
 // Food Requests
-routes.post('/request', RequestControlller.create);
-routes.get('/request/:shortId', RequestControlller.getByShortId);
-routes.get('/requests', RequestControlller.getByQueryParams);
+routes.post('/request', RequestController.create);
+routes.get('/request/:shortId', RequestController.getByShortId);
+routes.get('/requests', RequestController.getByQueryParams);
 
 // Delivery reports
-routes.post('/delivery', DeliveryControlller.create);
+routes.post('/delivery', DeliveryController.create);
+routes.get('/delivery/:shortId', DeliveryController.getByShortId);
+routes.get('/deliveries', DeliveryController.getByQueryParams);
 
 routes.all('*', function (req, res) {
     res.status(404).send({error: 404, message: 'invalid endpoint'});
