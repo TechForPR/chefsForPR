@@ -19,13 +19,12 @@ function getByShortId(req, res) {
             return;
         }
         res.status(200).send( { doc });
+    }).catch((err) => {
+        res.status(500).send(Object.assign(
+            { error: 500, message: 'Server error'},
+            err,
+        ));
     });
-    // }).catch((err) => {
-    //     res.status(500).send(Object.assign(
-    //         { error: 500, message: 'Server error'},
-    //         err,
-    //     ));
-    // });
 }
 
 function getByQueryParams(req, res){
@@ -55,13 +54,12 @@ function getByQueryParams(req, res){
         }else{
             res.status(404).send({ error: 404, message: 'No documents matching criteria'});
         }
+    }).catch((err) => {
+        res.status(500).send(Object.assign(
+            { error: 500, message: 'Server error'},
+            err,
+        ));
     });
-    // }).catch((err) => {
-    //     res.status(500).send(Object.assign(
-    //         { error: 500, message: 'Server error'},
-    //         err,
-    //     ));
-    // });
 }
 
 module.exports = {
