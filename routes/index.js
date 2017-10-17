@@ -1,11 +1,10 @@
 const express = require('express');
 const Request = require('../models/Request');
 const boostrapFields = require('../helpers/formsHelpers').bootstrapFields;
-
+const middleware = require('../middlewares');
 const router = express.Router();
 //For User
 const User = require('../models/User');
-
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', {
@@ -64,8 +63,8 @@ router.get('/request/:shortId', function(req, res) {
   });
 });
 
-/*User sessions*/
-router.get('/login', function(req, res) {
+/*User routes*/
+router.get('/login', middleware.nonLoggedInOnly,function(req, res) {
   const login_form = User.createLoginForm();
   res.render('user/login', {
     title: 'Login',
@@ -73,10 +72,15 @@ router.get('/login', function(req, res) {
     message: '',
     submitText: 'Login',
     form_type:'login',
+    other_page:{
+      intro_text:"Don't have an account?",
+      main_text:'Sign up',
+      path:'/signup'
+    }
   });
 });
 
-router.get('/signup',function(req,res){
+router.get('/signup',middleware.nonLoggedInOnly,function(req,res){
   const signup_form = User.createSignUpForm();
   res.render('user/login', {
     title: 'Sign Up',
@@ -84,26 +88,26 @@ router.get('/signup',function(req,res){
     message: '',
     submitText: 'Sign Up',
     form_type:'signup',
+    other_page:{
+      intro_text:'Already have an account?',
+      main_text:'Log In',
+      path:'/login'
+    }
   });
 });
-
-router.get('/test-auth', isLoggedIn, function(req, res) {
+router.get('/users/profile',[middleware.loggedInOnly,middleware.nonAdminsOnly],function(req,res){
+  res.render('user/profile', {
+    title: 'Profile',
+  });
+});
+router.get('/test-auth', middleware.loggedInOnly, function(req, res) {
   res.render('user/auth-test', {
     user:req.user
   });
 });
-
-function isLoggedIn(req, res, next) {
-
-  // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-    return next();
-
-  // if they aren't redirect them to the home page
-  res.redirect('/login');
-}
 router.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/');
+  res.redirect('/login');
 });
+
 module.exports = router;

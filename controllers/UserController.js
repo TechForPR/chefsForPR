@@ -1,5 +1,5 @@
 const User = require('../models/User');
-
+const passport = require('passport');
 function signup(req, res) {
   if (!req.body || !req.body.data) {
     return res.status(422).send({
@@ -10,6 +10,25 @@ function signup(req, res) {
   const user = new User(req.body.data);
   const email = req.body.data.email;
   const password = req.body.data.password;
+  const confirm_password  = req.body.data.confirm_password;
+  if(!email){
+    return res.status(400).send({
+      error: 400,
+      message: 'Valid email required'
+    });
+  }
+  if(!password){
+    return res.status(400).send({
+      error: 400,
+      message: 'Password required'
+    });
+  }
+  if(password!=confirm_password){
+    return res.status(400).send({
+      error: 400,
+      message: 'Passwords do not match'
+    });
+  }
   User.findOne({
     email: email
   }, function(err, user) {
@@ -42,36 +61,28 @@ function signup(req, res) {
   // });
 }
 
-function login(req, res) {
-  const email = req.body.data.email;
-  const password = req.body.data.password;
-  User.findOne({
-    email: email
-  }, function(err, user) {
-    // if there are any errors, return the error before anything else
-    if (err)
-      return done(err);
-
-    // if no user is found, return the message
-    if (!user){
-      return res.status(404).send({
-        error: 404,
-        message: 'No user found.'
+function login(req, res, next) {
+  /* look at the 2nd parameter to the below call */
+  passport.authenticate('local-login', function(err, user, info) {
+    console.log(err);
+    console.log(user);
+    console.log(info);
+    if (err) { return next(err); }
+    if (!user) { return res.status(401).send({
+      error: 401,
+      message: 'Username/password do not match'
+    }); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.status(200).send({
+        error: 200,
+        message: 'Login successful'
       });
-    }
-
-    // if the user is found but the password is wrong
-    if (!user.validPassword(password)){
-      if (!user){
-        return res.status(404).send({
-          error: 404,
-          message: 'Oops! Wrong password.'
-        });
-      }
-    }
-  });
+    });
+  })(req, res, next);
 }
 
 module.exports = {
-  signup
+  signup,
+  login
 }

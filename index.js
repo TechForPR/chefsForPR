@@ -40,6 +40,10 @@ app.use(session({ secret: 'somethingsecret' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(function(req, res, next) {
+    res.locals.user = req.user; // This is the important line
+    next();
+});
 
 // All the urls that start with api refer to endpoints
 // their responses are usually json and not actual views

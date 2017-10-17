@@ -1,4 +1,5 @@
 // helpers:
+
 // Read a form values and return a JS object:
 var formObject = function ($o) {
     var o = {};
@@ -113,17 +114,7 @@ $(document).ready(function () {
                 alert.html('There was a problem creating your account');
                 // validation failed for the Request
                 // display the errors in the form
-                if (response.responseJSON && response.responseJSON.errors) {
-                    var errors = response.responseJSON.errors;
-                    console.log(errors);
-                    for (var error in errors) {
-                        // TODO: abstract this somewhere else
-                        if (errors.hasOwnProperty(error)) {
-                            $('[name="'+error+'"]').parent('.form-group').addClass('has-error');
-                            $('[name="'+error+'"]').after('<p class="text-danger">' + errors[error].message + '</p>');
-                        }
-                    }
-                }
+                alert.html(response.responseJSON.message);
             } else {
                 alert.html('Hubo un error al solicitar, por favor intente mas tarde / There was an error saving, please try again later.');
             }
@@ -145,7 +136,7 @@ $(document).ready(function () {
         }).then(function (response) {
             alert.removeClass('hidden alert-danger alert-info').addClass('alert-success').html('<strong>Login successful</strong>');
             form.find('.form-group, .btn').addClass('hidden');
-            // window.location.replace('/users/profile');
+            window.location.href='/users/profile';
             //TODO: redirect to profile page when available
         }, function (response) {
             button.attr('disabled', false);
