@@ -8,8 +8,8 @@
   },
   "license": "MIT License",
   "scripts": {
-    "start": "node ./bin/www",
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "start": "./node_modules/.bin/supervisor ./bin/www",
+    "test": "./node_modules/.bin/mocha --reporter spec test/index.js"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
@@ -35,6 +35,8 @@
     "passport-google-oauth" : "~0.1.5",
     "connect-flash" : "~0.1.1",
     "bcrypt-nodejs" : "latest"
+    "supervisor": "^0.12.0"
+
   },
   "devDependencies": {
     "chai": "^4.1.2",

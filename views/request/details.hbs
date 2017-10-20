@@ -11,8 +11,6 @@
             <p><strong>Agency:</strong> {{doc.agency}}{{#unless doc.agency }}N/A{{/unless}}</p>
             <p><strong>Email:</strong> {{doc.email}}{{#unless doc.email }}N/A{{/unless}}</p>
             <p><strong>Phone:</strong> {{doc.phone}}{{#unless doc.phone }}N/A{{/unless}}</p>
-            <p><strong>Twitter:</strong> {{doc.twitter}}{{#unless doc.twitter }}N/A{{/unless}}</p>
-            <p><strong>Facebook:</strong> {{doc.facebook}}{{#unless doc.facebook }}N/A{{/unless}}</p>
             <p><strong>Address:</strong> {{doc.address}}{{#unless doc.address}}N/A{{/unless}}</p>
             <p><strong>City:</strong> {{doc.city}}{{#unless doc.city}}N/A{{/unless}}</p>
             <p><strong>Zipcode:</strong> {{doc.zipcode}}{{#unless doc.zipcode}}N/A{{/unless}}</p>
@@ -20,14 +18,6 @@
             <p><strong>Amount Of Days:</strong> {{doc.questions.amountOfDays}}{{#unless doc.questions.amountOfDays}}N/A{{/unless}}</p>
             <p><strong>Receiving Food Already:</strong> {{#if doc.questions.amountOfDays}}Yes {{else}}No {{/if}}</p>
             {{#if doc.questions.receivingFoodAlreadyDetails}}<p><strong>More info:</strong> {{doc.questions.receivingFoodAlreadyDetails}}</p>{{/if}}
-            <p><strong>Currently Have Food For:</strong> {{doc.questions.currentlyHaveFoodFor}}{{#unless doc.questions.currentlyHaveFoodFor}}N/A{{/unless}}</p>
-            {{#if doc.questions.currentlyHaveFoodForDetails}}<p><strong>More info:</strong> {{doc.questions.receivingFoodAlreadyDetails}}</p>{{/if}}
-            <p><strong>Needs</strong></p>
-            <div class="row">
-                <div class="col-xs-4"><p><strong>Breakfast:</strong> {{doc.needs.breakfast}}</p></div>
-                <div class="col-xs-4"><p><strong>Lunch:</strong> {{doc.needs.lunch}}</p></div>
-                <div class="col-xs-4"><p><strong>Dinner:</strong> {{doc.needs.dinner}}</p></div>
-            </div>
             <p><strong>Dietary Restrictions:</strong> {{doc.questions.dietaryRestrictions}}{{#unless doc.questions.dietaryRestrictions}}N/A{{/unless}}</p>
         </div>
     </div>

@@ -1,5 +1,6 @@
 const routes = require('express').Router();
-const RequestControlller = require('./RequestController');
+const RequestController = require('./RequestController');
+const DeliveryController = require('./DeliveryController');
 const UserController = require('./UserController');
 
 routes.get('/', function(req, res) {
@@ -9,9 +10,14 @@ routes.get('/', function(req, res) {
 });
 
 // Food Requests
-routes.post('/request', RequestControlller.create);
-routes.get('/request/:shortId', RequestControlller.getByShortId);
-routes.get('/requests', RequestControlller.getByQueryParams);
+routes.post('/request', RequestController.create);
+routes.get('/request/:shortId', RequestController.getByShortId);
+routes.get('/requests', RequestController.getByQueryParams);
+
+// Delivery reports
+routes.post('/delivery', DeliveryController.create);
+routes.get('/delivery/:shortId', DeliveryController.getByShortId);
+routes.get('/deliveries', DeliveryController.getByQueryParams);
 
 
 routes.post('/user/signup', UserController.signup);

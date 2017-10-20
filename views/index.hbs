@@ -7,8 +7,29 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
-            <a class="btn btn-primary" href="/request/new">Solicitud de Comidas</a>
-            <a class="btn btn-primary" href="#">Track Request</a>
+            <h2>Request Food/Solicitudes de Comida</h2>
+            <a class="btn btn-primary" href="/request/new/spanish">Solicitud de Comidas (Español)</a>
+            <a class="btn btn-primary" href="/request/new/english">New Request (English)</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <p>
+                <strong>Track Request</strong> Enter your request confirmation and
+                click the button to see the status of your request.</p>
+            <input type="text" class="form-control" id="requestId" placeholder="Request Id">
+            <a class="btn btn-primary" href="#" id="trackRequest">Track Request</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Food Delivery/Envios de Comida</h2>
+            <a class="btn btn-primary" href="/delivery/new">Record a Delivery</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Dashboards</h2>
+            <a class="btn btn-primary" href="/requests">View Requests</a>
+            <a class="btn btn-primary" href="/deliveries">View Deliveries</a>
         </div>
     </div>
 </div>

@@ -19,8 +19,9 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="/request/new">Solicitud de Comidas</a></li>
 
+            <li><a href="/request/new/spanish">Solicitud de Comidas (Español)</a></li>
+            <li><a href="/request/new/english">New Request (English)</a></li>
             {{#if user}}
             <li><a href="/logout">Logout  - {{user.email}}</a></li>
             {{else}}
@@ -32,9 +33,16 @@
       </div>
     </nav>
     {{{body}}}
-    <footer>
-
-    </footer>
+    <div class="container">
+        <footer>
+          <div class="row">
+            <a href="https://github.com/TechForPR/chefsForPR" target="_blank">
+              <img src="/images/github.png" alt="Github Logo" height="34">
+              Contribute on Github
+            </a>
+          </div>
+        </footer>
+    </div>
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
     <script src="/javascripts/actions.js"></script>
