@@ -1,15 +1,19 @@
 const express = require('express');
 const Request = require('../models/Request');
 const boostrapFields = require('../helpers/formsHelpers').bootstrapFields;
+const middleware = require('../middlewares');
 const requestLabelsSpanish = require('../config/constants').requestLabelsSpanish;
 const requestLabelsEnglish = require('../config/constants').requestLabelsEnglish;
 const Delivery = require('../models/Delivery');
 
 const router = express.Router();
-
+//For User
+const User = require('../models/User');
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Chefs For Puerto Rico 🇵🇷' });
+  res.render('index', {
+    title: 'Chefs For Puerto Rico 🇵🇷'
+  });
 });
 
 router.get('/requests', function (req, res) {
@@ -61,13 +65,22 @@ router.get('/request/new/:language', function (req, res) {
 
 router.get('/request/:shortId*?', function (req, res) {
   Request.findOne({ shortId: req.params.shortId }).then(doc => {
+
     if (!doc) return res.status(404).render('404');
-    console.log( doc.toJSON({ virtuals: true }));
-    res.render('request/details', { doc: doc.toJSON({ virtuals: true }), title: `Detalles de la solicitud ${req.params.shortId}`});
+    console.log(doc.toJSON({
+      virtuals: true
+    }));
+    res.render('request/details', {
+      doc: doc.toJSON({
+        virtuals: true
+      }),
+      title: `Detalles de la solicitud ${req.params.shortId}`
+    });
   }).catch(err => {
     res.status(400).send(err);
   });
 });
+
 
 router.get('/delivery/:shortId*?', function (req, res) {
   Delivery.findOne({ shortId: req.params.shortId }).then(doc => {
@@ -79,5 +92,51 @@ router.get('/delivery/:shortId*?', function (req, res) {
   });
 });
 
+/*User routes*/
+router.get('/login', middleware.nonLoggedInOnly,function(req, res) {
+  const login_form = User.createLoginForm();
+  res.render('user/login', {
+    title: 'Login',
+    form: login_form.toHTML(boostrapFields),
+    message: '',
+    submitText: 'Login',
+    form_type:'login',
+    other_page:{
+      intro_text:"Don't have an account?",
+      main_text:'Sign up',
+      path:'/signup'
+    }
+  });
+});
+
+router.get('/signup',middleware.nonLoggedInOnly,function(req,res){
+  const signup_form = User.createSignUpForm();
+  res.render('user/login', {
+    title: 'Sign Up',
+    form: signup_form.toHTML(boostrapFields),
+    message: '',
+    submitText: 'Sign Up',
+    form_type:'signup',
+    other_page:{
+      intro_text:'Already have an account?',
+      main_text:'Log In',
+      path:'/login'
+    }
+  });
+});
+router.get('/users/profile',[middleware.loggedInOnly,middleware.nonAdminsOnly],function(req,res){
+  res.render('user/profile', {
+    title: 'Profile',
+  });
+});
+router.get('/test-auth', middleware.loggedInOnly, function(req, res) {
+  res.render('user/auth-test', {
+    user:req.user
+  });
+});
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/login');
+});
 
 module.exports = router;

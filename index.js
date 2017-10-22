@@ -5,10 +5,14 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
-
 const config = require('./config');
 const controllers = require('./controllers');
 const index = require('./routes/index');
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
+
+require('./config/passport')(passport);
 
 config.mongoose.connection.on('open', () => {
   console.info('Connected to Mongo DB');
@@ -28,6 +32,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+//this is for authentication
+app.use(session({ secret: 'somethingsecret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use(function(req, res, next) {
+    res.locals.user = req.user; // This is the important line
+    next();
+});
 
 // All the urls that start with api refer to endpoints
 // their responses are usually json and not actual views
