@@ -2,14 +2,8 @@ const mongoose = require('../config').mongoose;
 const forms = require('forms');
 const bcrypt  = require('bcrypt-nodejs');
 
-
-const conditionalRequire = {
-  validator: function() {
-    return (this.email && this.email !== null) || (this.phone && this.phone !== null);
-  },
-  msg: 'Email or Phone Number are required',
-};
 const Schema = mongoose.Schema;
+
 const User = new Schema({
   email:{
     type:String,

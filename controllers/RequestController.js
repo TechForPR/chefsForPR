@@ -21,10 +21,7 @@ function getByShortId(req, res) {
         }
         res.status(200).send( { doc });
     }).catch((err) => {
-        res.status(500).send(Object.assign(
-            { error: 500, message: 'Server error'},
-            err,
-        ));
+        res.status(500).send(Object.assign({ error: 500, message: 'Server error'}, err));
     });
 }
 
@@ -63,10 +60,7 @@ function getByQueryParams(req, res){
             res.status(404).send({ error: 404, message: 'No documents matching criteria'});
         }
     }).catch((err) => {
-        res.status(500).send(Object.assign(
-            { error: 500, message: 'Server error'},
-            err,
-        ));
+        res.status(500).send(Object.assign({ error: 500, message: 'Server error'}, err));
     });
 }
 

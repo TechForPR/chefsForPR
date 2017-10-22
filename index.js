@@ -5,15 +5,15 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
-
 const config = require('./config');
 const controllers = require('./controllers');
 const index = require('./routes/index');
-
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
+
 require('./config/passport')(passport);
+
 config.mongoose.connection.on('open', () => {
   console.info('Connected to Mongo DB');
 });
@@ -23,8 +23,6 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
-
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -69,7 +67,5 @@ app.use(function(err, req, res) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 module.exports = app;
