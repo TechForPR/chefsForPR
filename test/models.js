@@ -25,8 +25,9 @@ const validDelivery = {
     lastDayOfDelivery: new Date('2017-10-25'),
     numberOfMealsDelivered: 100,
     demandSuplyGap: '100 missing',
-    municipality: 'Arecibo',
     agency: 'Red Cross',
+    municipalityId: '00201',
+    city: 'Arecibo'
 };
 
 describe('Food Request Model', function () {
@@ -67,9 +68,9 @@ describe('Delivery Model', function () {
     });
 
     it('Delivery gives errors when creating a Request with missing info', function () {
-        const delivery = new Delivery(Object.assign({}, validDelivery, { districtName: undefined }));
+        const delivery = new Delivery(Object.assign({}, validDelivery, { city: undefined }));
         const error = delivery.validateSync();
-        assert(error.errors['districtName'].message);
+        assert(error.errors['city'].message);
     });
 
     it('Creates a Delivery if valid', function () {
