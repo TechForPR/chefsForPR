@@ -1,11 +1,18 @@
 const Delivery = require('../models/Delivery');
 const moment = require('moment');
+const municipalities = require('../data/municipalities.json');
 
 function create(req, res) {
     if (!req.body || !req.body.data) {
         return res.status(422).send({error: 422, message: 'Missing data'});
     }
     const delivery = new Delivery(req.body.data);
+    const municipalityData = municipalities.find(m => {
+        console.log('dddd', m);
+        return delivery.municipalityId === m[3];
+    }) || ['', '', '', ''];
+    delivery.municipalityName = municipalityData[0];
+    delivery.population = municipalityData[1];
     delivery.save().then(doc => {
         res.status(200).send({ doc });
     }).catch(err => {

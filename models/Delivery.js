@@ -4,6 +4,7 @@ const forms = require('forms');
 const deliveryStatuses = require('../config/constants').deliveryStatuses;
 const longDateFormat = require('../config/constants').longDateFormat;
 const moment = require('moment');
+const municipalities = require('./../data/municipalities.json');
 
 const formatDate = function (d) {
     moment(d).format(longDateFormat);
@@ -20,13 +21,19 @@ const Delivery = new Schema({
         type: String,
         required: [true, 'This field is required'],
     },
-    districtName: {
+    city: {
         type: String,
         required: [true, 'This field is required'],
     },
-    municipality: {
+    municipalityId: {
         type: String,
         required: [true, 'This field is required'],
+    },
+    municipalityName: {
+        type: String,
+    },
+    population: {
+        type: Number,
     },
     lastDayOfDelivery: {
         type: Date,
@@ -59,11 +66,15 @@ const Delivery = new Schema({
 });
 
 Delivery.statics.createForm = function (labels) {
+    const municipalityOptions = municipalities.map(m => {
+        return [m[3], m[0]];
+    });
     const fields = forms.fields;
     const widgets = forms.widgets;
     const reg_form = forms.create({
         agency: fields.number({ label: labels.agency }),
-        municipality: fields.string({ label: labels.municipality }),
+        municipalityId: fields.string({ label: labels.municipality, widget: widgets.select(), choices: municipalityOptions }),
+        city: fields.string({ label: labels.city }),
         districtName: fields.string({ label: labels.districtName }),
         lastDayOfDelivery: fields.date({ label: labels.lastDayOfDelivery, widget: widgets.date() }),
         numberOfMealsDelivered: fields.number({ label: labels.numberOfMealsDelivered }),

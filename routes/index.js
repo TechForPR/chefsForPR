@@ -28,7 +28,8 @@ router.get('/delivery/new', function (req, res) {
   const form = Delivery.createForm({
     agency: '*Name of organization',
     districtName: '*District Name / Neighborhood',
-    municipality: '*Municipality / City',
+    municipality: '*Municipality',
+    city: '*City',
     lastDayOfDelivery: '*Last day of delivery?',
     numberOfMealsDelivered: '*Number of Meals delivered',
     demandSuplyGap: 'Demand and supply gap?',
@@ -65,11 +66,7 @@ router.get('/request/new/:language', function (req, res) {
 
 router.get('/request/:shortId*?', function (req, res) {
   Request.findOne({ shortId: req.params.shortId }).then(doc => {
-
     if (!doc) return res.status(404).render('404');
-    console.log(doc.toJSON({
-      virtuals: true
-    }));
     res.render('request/details', {
       doc: doc.toJSON({
         virtuals: true
@@ -85,7 +82,6 @@ router.get('/request/:shortId*?', function (req, res) {
 router.get('/delivery/:shortId*?', function (req, res) {
   Delivery.findOne({ shortId: req.params.shortId }).then(doc => {
     if (!doc) return res.status(404).render('404');
-    console.log( doc.toJSON({ virtuals: true }));
     res.render('delivery/details', { doc: doc.toJSON({ virtuals: true }), title: `Delivery details ${req.params.shortId}`});
   }).catch(err => {
     res.status(400).send(err);
