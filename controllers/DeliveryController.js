@@ -1,4 +1,5 @@
 const Delivery = require('../models/Delivery');
+const Request = require('../models/Request');
 const moment = require('moment');
 
 function create(req, res) {
@@ -6,6 +7,13 @@ function create(req, res) {
         return res.status(422).send({error: 422, message: 'Missing data'});
     }
     const delivery = new Delivery(req.body.data);
+    console.log(delivery);
+    if (delivery.requestNumber) {
+        Request.findOne({ shortId: delivery.requestNumber}).then(doc => {
+            doc.status = 'delivered';
+            doc.save();
+        });
+    }
     delivery.save().then(doc => {
         res.status(200).send({ doc });
     }).catch(err => {
