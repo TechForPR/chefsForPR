@@ -22,7 +22,7 @@ const validRequest = {
 
 const validDelivery = {
     districtName: 'Colaboratorio 15',
-    lastDayOfDelivery: new Date('2017-10-25'),
+    lastDayOfDelivery: new Date(),
     numberOfMealsDelivered: 100,
     demandSuplyGap: '100 missing',
     agency: 'Red Cross',

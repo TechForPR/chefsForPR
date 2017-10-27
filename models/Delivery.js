@@ -91,4 +91,16 @@ Delivery.virtual('lastDayOfDeliveryParsed').get(function () {
     return moment(this.lastDayOfDelivery).format(longDateFormat);
 });
 
+Delivery.virtual('createdOnParsed').get(function () {
+    return moment(this.createdOn).format(longDateFormat);
+});
+
+Delivery.pre("save", function(next) {
+    const municipalityData = municipalities.find(m => this.municipalityId === m[3]) || ['', '', '', ''];
+    this.municipalityName = municipalityData[0];
+    this.population = municipalityData[1];
+    next();
+});
+
+
 module.exports = mongoose.model('Delivery', Delivery);
