@@ -60,8 +60,6 @@ const Delivery = new Schema({
         default: false,
     }
 }, {
-    toObject: { virtuals: true },
-    toJSON: { virtuals: true },
     timestamps: true,
 });
 
@@ -84,15 +82,18 @@ Delivery.statics.createForm = function (labels) {
 }
 
 Delivery.virtual('createdOn').get(function () {
-    return moment(this.createdAt).format(longDateFormat);
+    const delivery = this.toObject();
+    return moment(delivery.createdAt).format(longDateFormat);
 });
 
 Delivery.virtual('lastDayOfDeliveryParsed').get(function () {
-    return moment(this.lastDayOfDelivery).format(longDateFormat);
+    const delivery = this.toObject();
+    return moment(delivery.lastDayOfDelivery).format(longDateFormat);
 });
 
 Delivery.virtual('createdOnParsed').get(function () {
-    return moment(this.createdOn).format(longDateFormat);
+    const delivery = this.toObject();
+    return moment(delivery.createdOn).format(longDateFormat);
 });
 
 Delivery.pre("save", function(next) {
