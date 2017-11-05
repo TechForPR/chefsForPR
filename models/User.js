@@ -1,7 +1,8 @@
 const mongoose = require('../config').mongoose;
 const forms = require('forms');
 const bcrypt  = require('bcrypt-nodejs');
-
+const longDateFormat = require('../config/constants').longDateFormat;
+const moment = require('moment');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
@@ -74,4 +75,22 @@ User.statics.createSignUpForm = function() {
   });
   return form;
 }
+User.virtual('createdOn').get(function () {
+    return moment(this.createdAt).format(longDateFormat);
+});
+User.virtual('roleTitle').get(function () {
+    switch(this.role){
+      case 'standard':
+        return 'Standard';
+      case 'admin':
+        return 'Admin';
+      case 'superadmin':
+        return 'Super';
+      case 'chef':
+        return 'Chef';
+    }
+});
+User.virtual('hasAdminRights').get(function () {
+    return this.isAdmin();
+});
 module.exports = mongoose.model('User', User);

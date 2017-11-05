@@ -81,8 +81,47 @@ function login(req, res, next) {
     });
   })(req, res, next);
 }
+function getByQueryParams(req, res){
+    var query = {};
+    var sortBy = {};
+    var limit = 200;
+    let param = '';
 
+    // add request query params
+    for(param in req.query){
+        if(['limit', 'sortBy', 'createdAt'].indexOf(param) < 0){
+            query[param] = req.query[param];
+        }
+    }
+    // limit to 25 by docs by default, "limit" query param overwrites this value
+    var re = /^[0-9]*$/i;
+    if(req.query.hasOwnProperty('limit') && req.query.limit.match(re)){
+        limit = parseInt(req.query.limit);
+    }
+    // sortBy by one field
+    var re2 = /^[-|+]+[a-zA-Z0-9]*$/i;
+    if(req.query.hasOwnProperty('sortBy') && req.query.limit.match(re2)){
+        sortBy = req.query[param];
+    }
+    if (req.query.hasOwnProperty('createdAt')) {
+        query.createdAt =  {
+            '$gte': moment(req.query.createdAt).startOf('day'),
+            '$lt': moment(req.query.createdAt).endOf('day'),
+        };
+    }
+    // query the schema
+    User.find(query).limit(limit).sort(sortBy).then((docs) => {
+        if(docs.length > 0){
+            res.status(200).send(docs);
+        }else{
+            res.status(404).send({ error: 404, message: 'No users matching criteria'});
+        }
+    }).catch((err) => {
+        res.status(500).send(Object.assign({ error: 500, message: 'Server error'}, err));
+    });
+}
 module.exports = {
   signup,
-  login
+  login,
+  getByQueryParams,
 }

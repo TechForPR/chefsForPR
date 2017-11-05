@@ -120,6 +120,11 @@ router.get('/signup',middleware.nonLoggedInOnly,function(req,res){
     }
   });
 });
+router.get('/users',function(req,res){
+  res.render('user/list',{
+    title:'Users',
+  })
+});
 router.get('/users/profile',[middleware.loggedInOnly,middleware.nonAdminsOnly],function(req,res){
   res.render('user/profile', {
     title: 'Profile',

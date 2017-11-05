@@ -22,6 +22,7 @@ routes.get('/deliveries', DeliveryController.getByQueryParams);
 
 routes.post('/user/signup', UserController.signup);
 routes.post('/user/login', UserController.login);
+routes.get('/users', UserController.getByQueryParams);
 
 routes.all('*', function(req, res) {
   res.status(404).send({

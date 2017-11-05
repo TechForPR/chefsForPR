@@ -1,0 +1,57 @@
+<div class="jumbotron">
+    <h1>List of Users</h1>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <label for="">
+            Created on:
+            <input id="changeDate" type="date">
+        </label>
+        <label for="">
+            &nbsp;Role:
+            <select id="changeRole">
+                <option value="">Standard</option>
+                <option value="new">Admin</option>
+                <option value="valid">Super Admin</option>
+                <option value="delivered">Chef</option>
+            </select>
+        </label>
+        <button class="btn btn-default btn-md" data-toggle="modal" data-target="#newUserInviteModal">Invite New User</button>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+           <div id="user-list"></div>
+        </div>
+    </div>
+</div>
+<div id="newUserInviteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Invite a new User</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <label for="newUserEmail">Email</label>
+            <input type="email" id="newUserEmail"/>
+          </div>
+          <div class="col-xs-12 text-center">
+            <select type="email" id="newUserType">
+              <option value="standard">Standard</option>
+              <option value="chef">Chef</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default">Invite</button>
+      </div>
+    </div>
+
+  </div>
+</div>

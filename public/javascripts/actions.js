@@ -190,7 +190,9 @@ var getRequests = function (filter) {
 var getDeliveries = function(filter) {
     return getResource('deliveries', filter);
 }
-
+var getUsers = function(filter) {
+    return getResource('users', filter);
+}
 var createRequestsTable = function (docs) {
     if (!Array.isArray(docs)) return '';
     var result = '<table class="table table-striped">';
@@ -221,6 +223,26 @@ var createDeliveriesTable = function (docs) {
         result += '  <td>' + (docs[i].createdOnParsed || '') + '</td>';
         result += '  <td>' + (docs[i].numberOfMealsDelivered || '') + '</td>';
         result += '  <td><a href="/delivery/' + docs[i].shortId + '">' + (docs[i].shortId || '') + '</a></td>';
+        result += '</tr>';
+    }
+    result += '</tbody>';
+    result += '</table>';
+    return result;
+};
+
+var createUsersTable = function (docs) {
+    if (!Array.isArray(docs)) return '';
+    var result = '<table class="table table-striped">';
+    result += '<tbody>';
+    result += '<thead><tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Created On</th><th>Role</th><th>View Profile</th></tr></thead>'
+    for (var i = 0; i < docs.length; i++) {
+        result += '<tr>';
+        result += '  <td>' + (docs[i].first_name || '') + '</td>';
+        result += '  <td>' + (docs[i].last_name || '') + '</td>';
+        result += '  <td>' + (docs[i].email || '') + '</td>';
+        result += '  <td>' + (docs[i].createdOn || '') + '</td>';
+        result += '  <td>' + (docs[i].roleTitle || '') + '</td>';
+        result += '  <td><button type="button" onclick="editUser('+i+')" class="btn btn-default btn-sm">Edit</button></td>';
         result += '</tr>';
     }
     result += '</tbody>';
@@ -264,6 +286,19 @@ $(document).ready(function () {
                 $('#deliveries-list').html(createDeliveriesTable(docs));
             }, function () {
                 $('#deliveries-list').html('<h2>No Requests found matching the criteria.</h2>');
+            });
+        });
+    }
+    if (window.location.pathname === '/users') {
+        getUsers().then(function (docs) {
+            $('#user-list').html(createUsersTable(docs));
+        });
+        $('#changeRole, #changeDate').on('change', function () {
+            var filter = getFilter();
+            getUsers(filter).then(function (docs) {
+                $('#user-list').html(createUsersTable(docs));
+            }, function () {
+                $('#user-list').html('<h2>No Users found matching the criteria.</h2>');
             });
         });
     }
